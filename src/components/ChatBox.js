@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Chatbox.css';
-
+require('dotenv').config();
 function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -13,7 +13,7 @@ function ChatBox() {
     setMessages([...messages, userMessage]);
 
     try {
-      const response = await axios.post('http://localhost:8000/ask', { question: input });
+      const response = await axios.post(`http://${process.env.URL}:${process.env.PORT}/ask`, { question: input });
       const botMessage = { sender: 'bot', text: response.data.answer };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
